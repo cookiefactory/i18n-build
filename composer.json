@@ -1,0 +1,28 @@
+{
+    "name": "tholabs/i18n-build",
+    "description": "Framework to build PHP internationalization assets out of arbitrary input formats",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Tholabs\\I18nBuild\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tholabs\\I18nBuildTests\\": "tests"
+        }
+    },
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "David Beuchert",
+            "email": "mail@dbeuchert.com"
+        }
+    ]
+}
