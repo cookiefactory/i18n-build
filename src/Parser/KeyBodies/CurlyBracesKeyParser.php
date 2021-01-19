@@ -34,7 +34,10 @@
             fputs($chunkStream, $chunk);
             rewind($chunkStream);
 
-            return new KeyDefinition($parentToken->getKeyName(), ...$parentToken->getBodyTokens(), ...$this->loopSeek($chunkStream, static::CURLY_START, static::CURLY_END));
+            $tokens = iterator_to_array($this->loopSeek($chunkStream, static::CURLY_START, static::CURLY_END));
+            fclose($chunkStream);
+
+            return new KeyDefinition($parentToken->getKeyName(), ...$parentToken->getBodyTokens(), ...$tokens);
         }
 
         private function loopSeek ($stream, string $needleStart, string $needleEnd) : \Generator {
