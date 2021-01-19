@@ -40,6 +40,13 @@
             return new KeyDefinition($parentToken->getKeyName(), ...$parentToken->getBodyTokens(), ...$tokens);
         }
 
+        /**
+         * @param $stream
+         * @param string $needleStart
+         * @param string $needleEnd
+         * @return \Generator|Tokenized[]
+         * @throws ParserException
+         */
         private function loopSeek ($stream, string $needleStart, string $needleEnd) : \Generator {
             $textBody = $this->seek($stream, $needleStart);
             if (!empty($textBody)) {
