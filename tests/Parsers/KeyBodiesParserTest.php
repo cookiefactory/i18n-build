@@ -103,7 +103,7 @@
         function testShouldThrowExceptionForBrokenVariableDefinitions (Parser $parser, string $brokenTemplate) {
             $this->expectException(ParserException::class);
             $this->expectExceptionMessage('Parser exception: Expected variable closing tag but encountered EOF in key definition');
-            
+
             $parser->tokenize(null, $brokenTemplate);
         }
 
