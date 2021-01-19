@@ -34,8 +34,13 @@
             fputs($chunkStream, $chunk);
             rewind($chunkStream);
 
-            $tokens = iterator_to_array($this->loopSeek($chunkStream, static::CURLY_START, static::CURLY_END));
-            fclose($chunkStream);
+            try {
+                $tokens = iterator_to_array($this->loopSeek($chunkStream, static::CURLY_START, static::CURLY_END));
+            } catch (ParserException $exception) {
+                throw new ParserException("{$exception->getMessage()} for key `{$parentToken->getKeyName()}`", $exception->getCode(), $exception);
+            } finally {
+                fclose($chunkStream);
+            }
 
             return new KeyDefinition($parentToken->getKeyName(), ...$parentToken->getBodyTokens(), ...$tokens);
         }
@@ -62,7 +67,7 @@
                     fseek($stream, fstat($stream)['size'] - $needleEndLength);
 
                     if (fread($stream, $needleEndLength) !== $needleEnd) {
-                        throw new ParserException('Expected variable closing tag but encountered EOF in key definition');
+                        throw new ParserException('Expected variable closing tag but encountered EOF instead in key definition');
                     }
                 }
 
