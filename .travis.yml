@@ -1,0 +1,18 @@
+language: php
+
+cache:
+  directories:
+    - vendor
+
+env:
+  - DEPENDENCIES=""
+  - DEPENDENCIES="--prefer-lowest --prefer-stable"
+
+php:
+  - 7.4
+
+install:
+  - composer update --no-interaction --prefer-dist $DEPENDENCIES
+
+script:
+  - vendor/bin/phpunit tests --testdox
