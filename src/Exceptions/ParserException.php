@@ -5,7 +5,14 @@
     use Throwable;
 
     class ParserException extends \Exception {
-        function __construct ($message, $code = 0, Throwable $previous = null) {
-            parent::__construct("Parser exception: {$message}", $code, $previous);
+        private string $innerMessage;
+
+        function __construct (string $innerMessage, $code = 0, Throwable $previous = null) {
+            parent::__construct("Parser exception: {$innerMessage}", $code, $previous);
+            $this->innerMessage = $innerMessage;
+        }
+
+        function getInnerMessage () : string {
+            return $this->innerMessage;
         }
     }
