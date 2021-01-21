@@ -35,7 +35,7 @@
             rewind($chunkStream);
 
             try {
-                $tokens = iterator_to_array($this->loopSeek($chunkStream, static::CURLY_START, static::CURLY_END));
+                $tokens = iterator_to_array($this->loopSeek($chunkStream, static::CURLY_START, static::CURLY_END), false);
             } catch (ParserException $exception) {
                 throw new ParserException("{$exception->getMessage()} for key `{$parentToken->getKeyName()}`", $exception->getCode(), $exception);
             } finally {
