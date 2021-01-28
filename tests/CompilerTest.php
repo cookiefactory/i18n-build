@@ -3,7 +3,8 @@
     // Overwriting the date function so we always get the same result from our generated code
     namespace Tholabs\I18nBuild\Writer\Nodes;
     function date($format) {
-        return \date($format, 1629632262);
+        \date_default_timezone_set('UTC');
+        return \date($format, 1629639462);
     }
 
     namespace Tholabs\I18nBuildTests;
@@ -45,7 +46,7 @@
                                *
                                * @i18n-package foo
                                * @i18n-version 1.0.0
-                               * @createdAt 2021-08-22T13:37:42+02:00
+                               * @createdAt 2021-08-22T13:37:42+00:00
                                */
                               
                               return [
