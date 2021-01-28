@@ -21,10 +21,11 @@
          */
         function testShouldParseSimpleKeyStructs (array $expectedKeyBodyTokens, string $inputChunk, Parser $parser) {
             /** @var KeyDefinition $token */
-            $token = $parser->tokenize(new KeyDefinition('bodiesParserTest'), $inputChunk);
+            $token = $parser->tokenize(new KeyDefinition('bodiesParserTest', $inputChunk . ' Test'), $inputChunk);
 
             $this->assertInstanceOf(KeyDefinition::class, $token);
             $this->assertSame('bodiesParserTest', $token->getKeyName(), 'KeyBody parser may not change key name');
+            $this->assertSame($inputChunk . ' Test', $token->getOriginalChunk(), 'KeyBody parser may not change original chunk value');
 
             $this->assertCount(count($expectedKeyBodyTokens), $token->getBodyTokens());
             foreach ($expectedKeyBodyTokens as $i => $expectedToken) {
@@ -74,10 +75,11 @@
          */
         function testShouldParseKeyWithoutVariable (Parser $parser) {
             /** @var KeyDefinition $token */
-            $token = $parser->tokenize(new KeyDefinition('bodiesParserTest'), 'Hello World!');
+            $token = $parser->tokenize(new KeyDefinition('bodiesParserTest', 'Hello World Test'), 'Hello World!');
 
             $this->assertInstanceOf(KeyDefinition::class, $token);
             $this->assertSame('bodiesParserTest', $token->getKeyName(), 'KeyBody parser may not change key name');
+            $this->assertSame('Hello World Test', $token->getOriginalChunk(), 'KeyBody parser may not change original chunk value');
 
             $expectedKeyBodyTokens = [
                 new Text('Hello World!'),
@@ -113,6 +115,18 @@
                      yield $parserName . ', ' . $name => [$parser, $brokenTemplate];
                 }
             }
+        }
+
+        /**
+         * @param Parser $parser
+         * @throws ParserException
+         * @dataProvider provideKeyParsers
+         */
+        function testShouldThrowExceptionWhenPassingAChunkThatIsNotContainedInTheParent (Parser $parser) {
+            $this->expectException(ParserException::class);
+            $this->expectExceptionMessage('Parser exception: Input chunk is not part of parent token original chunk');
+
+            $parser->tokenize(new KeyDefinition('broken', 'Oh Lord Throw An Exception Here'), 'exception');
         }
 
     }

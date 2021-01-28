@@ -27,7 +27,11 @@
         protected const CURLY_END = '}';
 
         function tokenize (?Tokenized $parentToken, string $chunk) : Tokenized {
-            $parentToken = $parentToken ?? new KeyDefinition('');
+            $parentToken = $parentToken ?? new KeyDefinition('', $chunk);
+
+            if (strstr($parentToken->getOriginalChunk(), $chunk) === false) {
+                throw new ParserException('Input chunk is not part of parent token original chunk');
+            }
 
             // Create a stream and move it to the beginning
             $chunkStream = fopen('php://temp', 'w+');
@@ -42,7 +46,7 @@
                 fclose($chunkStream);
             }
 
-            return new KeyDefinition($parentToken->getKeyName(), ...$parentToken->getBodyTokens(), ...$tokens);
+            return new KeyDefinition($parentToken->getKeyName(), $parentToken->getOriginalChunk(), ...$parentToken->getBodyTokens(), ...$tokens);
         }
 
         /**

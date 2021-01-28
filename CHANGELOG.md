@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0-alpha3] - 2020-01-28
 ### Changed
 - Standard package output now contains meta-data for easier access of i18n package format version during runtime
+- Key definitions in i18n output now contain their original definition value
 
 ## [1.0.0-alpha2] - 2020-01-21
 ### Fixed
@@ -15,6 +16,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Improved `ParserException` messages
 
-###
 ## [1.0.0-alpha1] - 2020-01-19
 🥳 Initial Release

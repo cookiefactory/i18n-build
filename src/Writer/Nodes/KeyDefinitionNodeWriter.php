@@ -32,7 +32,7 @@
                 $keyBody .= rtrim($this->subCompile(true, $subCompiler, $bodyToken), PHP_EOL);
             }
 
-            return "'{$token->getKeyName()}' => fn(array \$context) => \"{$keyBody}\",";
+            return "'{$token->getKeyName()}' => [fn(array \$context) => \"{$keyBody}\", '{$token->getOriginalChunk()}'],";
         }
 
     }

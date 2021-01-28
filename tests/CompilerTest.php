@@ -53,8 +53,8 @@
                                       'i18n-version' => [1, 0, 0]
                                   ],
                                   'keys' => [
-                                      'bar' => fn(array $context) => "I am a test key",
-                                      'hello.world' => fn(array $context) => "Hello {$context['name']}!",
+                                      'bar' => [fn(array $context) => "I am a test key", 'I am a test key'],
+                                      'hello.world' => [fn(array $context) => "Hello {$context['name']}!", 'Hello {name}!'],
                                   ]
                               ];
                               
