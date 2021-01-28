@@ -31,8 +31,8 @@
 
         function testShouldCompilePackage () {
             $this->compiler->compileToken(new PackageDefinition('foo',
-                new KeyDefinition('bar', new Text('I am a test key')),
-                new KeyDefinition('hello.world', new Text('Hello '), new Variable('name'), new Text('!')),
+                new KeyDefinition('bar', 'I am a test key', new Text('I am a test key')),
+                new KeyDefinition('hello.world', 'Hello {name}!', new Text('Hello '), new Variable('name'), new Text('!')),
             ));
 
             $this->assertSame(<<<'ExpectedRendering'
@@ -49,8 +49,13 @@
                                */
                               
                               return [
-                                  'bar' => fn(array $context) => "I am a test key",
-                                  'hello.world' => fn(array $context) => "Hello {$context['name']}!",
+                                  'meta' => [
+                                      'i18n-version' => [1, 0, 0]
+                                  ],
+                                  'keys' => [
+                                      'bar' => fn(array $context) => "I am a test key",
+                                      'hello.world' => fn(array $context) => "Hello {$context['name']}!",
+                                  ]
                               ];
                               
                               ExpectedRendering
