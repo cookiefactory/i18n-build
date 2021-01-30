@@ -75,11 +75,11 @@
          */
         function testShouldParseKeyWithoutVariable (Parser $parser) {
             /** @var KeyDefinition $token */
-            $token = $parser->tokenize(new KeyDefinition('bodiesParserTest', 'Hello World Test'), 'Hello World!');
+            $token = $parser->tokenize(new KeyDefinition('bodiesParserTest', 'Hello World! Test'), 'Hello World!');
 
             $this->assertInstanceOf(KeyDefinition::class, $token);
             $this->assertSame('bodiesParserTest', $token->getKeyName(), 'KeyBody parser may not change key name');
-            $this->assertSame('Hello World Test', $token->getOriginalChunk(), 'KeyBody parser may not change original chunk value');
+            $this->assertSame('Hello World! Test', $token->getOriginalChunk(), 'KeyBody parser may not change original chunk value');
 
             $expectedKeyBodyTokens = [
                 new Text('Hello World!'),
