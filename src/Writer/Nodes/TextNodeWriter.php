@@ -7,11 +7,12 @@
     use Tholabs\I18nBuild\Tokens\Text;
     use Tholabs\I18nBuild\Tokens\Tokenized;
     use Tholabs\I18nBuild\Writer\NodeWritable;
+    use Tholabs\I18nBuild\Writer\SafeEscapingTrait;
     use Tholabs\I18nBuild\Writer\SubCompilerTrait;
     use Tholabs\I18nBuild\Writer\TokenTypeAssertionTrait;
 
     class TextNodeWriter implements NodeWritable {
-        use SubCompilerTrait, TokenTypeAssertionTrait;
+        use SubCompilerTrait, TokenTypeAssertionTrait, SafeEscapingTrait;
 
         function isApplicableFor (Tokenized $token) : bool {
             return $token instanceof Text;
@@ -26,11 +27,7 @@
         function compile (Compiler $compiler, Tokenized $token) : string {
             $this->assertTokenType(Text::class, $token);
 
-            return "{$this->escapeTokenBody($token->getBody())}";
-        }
-
-        private function escapeTokenBody (string $value) : string {
-            return addslashes($value);
+            return "{$this->escapeStringForDoubleQuoteUsage($token->getBody())}";
         }
 
     }

@@ -7,11 +7,12 @@
     use Tholabs\I18nBuild\Tokens\Tokenized;
     use Tholabs\I18nBuild\Tokens\Variable;
     use Tholabs\I18nBuild\Writer\NodeWritable;
+    use Tholabs\I18nBuild\Writer\SafeEscapingTrait;
     use Tholabs\I18nBuild\Writer\SubCompilerTrait;
     use Tholabs\I18nBuild\Writer\TokenTypeAssertionTrait;
 
     class VariableNodeWriter implements NodeWritable {
-        use SubCompilerTrait, TokenTypeAssertionTrait;
+        use SubCompilerTrait, TokenTypeAssertionTrait, SafeEscapingTrait;
 
         function isApplicableFor (Tokenized $token) : bool {
             return $token instanceof Variable;
@@ -26,11 +27,7 @@
         function compile (Compiler $compiler, Tokenized $token) : string {
             $this->assertTokenType(Variable::class, $token);
 
-            return "{\$context['{$this->escapeTokenBody($token->getVariableName())}']}";
-        }
-
-        private function escapeTokenBody (string $value) : string {
-            return addslashes($value);
+            return "{\$context['{$this->escapeStringForSingleQuoteUsage($token->getVariableName())}']}";
         }
 
     }

@@ -7,11 +7,12 @@
     use Tholabs\I18nBuild\Tokens\KeyDefinition;
     use Tholabs\I18nBuild\Tokens\Tokenized;
     use Tholabs\I18nBuild\Writer\NodeWritable;
+    use Tholabs\I18nBuild\Writer\SafeEscapingTrait;
     use Tholabs\I18nBuild\Writer\SubCompilerTrait;
     use Tholabs\I18nBuild\Writer\TokenTypeAssertionTrait;
 
     class KeyDefinitionNodeWriter implements NodeWritable {
-        use SubCompilerTrait, TokenTypeAssertionTrait;
+        use SubCompilerTrait, TokenTypeAssertionTrait, SafeEscapingTrait;
 
         function isApplicableFor (Tokenized $token) : bool {
             return $token instanceof KeyDefinition;
@@ -32,7 +33,7 @@
                 $keyBody .= rtrim($this->subCompile(true, $subCompiler, $bodyToken), PHP_EOL);
             }
 
-            return "'{$token->getKeyName()}' => [fn(array \$context) => \"{$keyBody}\", '{$token->getOriginalChunk()}'],";
+            return "'{$token->getKeyName()}' => [fn(array \$context) => \"{$keyBody}\", '{$this->escapeStringForSingleQuoteUsage($token->getOriginalChunk())}'],";
         }
 
     }

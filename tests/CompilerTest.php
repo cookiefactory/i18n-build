@@ -34,6 +34,11 @@
             $this->compiler->compileToken(new PackageDefinition('foo',
                 new KeyDefinition('bar', 'I am a test key', new Text('I am a test key')),
                 new KeyDefinition('hello.world', 'Hello {name}!', new Text('Hello '), new Variable('name'), new Text('!')),
+                new KeyDefinition('with.linefeed', "Hello\n{name}!", new Text("Hello\n"), new Variable('name'), new Text('!')),
+                new KeyDefinition('with.doubleQuote', 'Hello "{name}"!', new Text('Hello "'), new Variable('name'), new Text('"!')),
+                new KeyDefinition('with.singleQuoteInVariable', "Hello {name'lol}!", new Text("Hello "), new Variable("name'lol"), new Text('!')),
+                new KeyDefinition('with.linefeedInVariable', "Hello {name\nlol}!", new Text("Hello "), new Variable('name\'."\n".\'lol'), new Text('!')),
+                new KeyDefinition('with.variableToken', "Hello \$name!", new Text("Hello \$name!")),
             ));
 
             $this->assertSame(<<<'ExpectedRendering'
@@ -56,6 +61,11 @@
                                   'keys' => [
                                       'bar' => [fn(array $context) => "I am a test key", 'I am a test key'],
                                       'hello.world' => [fn(array $context) => "Hello {$context['name']}!", 'Hello {name}!'],
+                                      'with.linefeed' => [fn(array $context) => "Hello\n{$context['name']}!", 'Hello'."\n".'{name}!'],
+                                      'with.doubleQuote' => [fn(array $context) => "Hello \"{$context['name']}\"!", 'Hello "{name}"!'],
+                                      'with.singleQuoteInVariable' => [fn(array $context) => "Hello {$context['name\'lol']}!", 'Hello {name\'lol}!'],
+                                      'with.linefeedInVariable' => [fn(array $context) => "Hello {$context['name\'."\n".\'lol']}!", 'Hello {name'."\n".'lol}!'],
+                                      'with.variableToken' => [fn(array $context) => "Hello \$name!", 'Hello $name!'],
                                   ]
                               ];
                               
