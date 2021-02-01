@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Standard package output now contains meta-data for easier access of i18n package format version during runtime
 - Key definitions in i18n output now contain their original definition value
 
+### Fixed
+- Correctly escape all strings written to source code instead of just passing them to `addslashes()`
+
 ## [1.0.0-alpha2] - 2020-01-21
 ### Fixed
 - Fixed a bug where the `CurlyBracesKeyParser` would incorrectly return tokens for keys with more than two tokens
