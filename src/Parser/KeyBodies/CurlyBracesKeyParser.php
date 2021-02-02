@@ -30,7 +30,7 @@
         function tokenize (?Tokenized $parentToken, string $chunk) : Tokenized {
             $parentToken = $parentToken ?? new KeyDefinition('', $chunk);
 
-            if (strstr($parentToken->getOriginalChunk(), $chunk) === false) {
+            if ($chunk !== '' && strstr($parentToken->getOriginalChunk(), $chunk) === false) {
                 throw new ParserException("Input chunk is not part of parent token original chunk for key `{$parentToken->getKeyName()}`");
             }
 

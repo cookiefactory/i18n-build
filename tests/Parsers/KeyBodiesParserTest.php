@@ -71,6 +71,21 @@
         /**
          * @param Parser $parser
          * @throws ParserException
+         *
+         * @dataProvider provideKeyParsers
+         */
+        function testShouldParseEmptyKeyBody (Parser $parser) {
+            /** @var KeyDefinition $token */
+            $token = $parser->tokenize(new KeyDefinition('emptyKey', ''), '');
+
+            $this->assertSame('emptyKey', $token->getKeyName());
+            $this->assertSame('', $token->getOriginalChunk());
+            $this->assertEmpty($token->getBodyTokens());
+        }
+
+        /**
+         * @param Parser $parser
+         * @throws ParserException
          * @dataProvider provideKeyParsers
          */
         function testShouldParseKeyWithoutVariable (Parser $parser) {
