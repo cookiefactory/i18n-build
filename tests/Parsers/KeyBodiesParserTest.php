@@ -124,7 +124,7 @@
          */
         function testShouldThrowExceptionWhenPassingAChunkThatIsNotContainedInTheParent (Parser $parser) {
             $this->expectException(ParserException::class);
-            $this->expectExceptionMessage('Parser exception: Input chunk is not part of parent token original chunk');
+            $this->expectExceptionMessage('Parser exception: Input chunk is not part of parent token original chunk for key `broken`');
 
             $parser->tokenize(new KeyDefinition('broken', 'Oh Lord Throw An Exception Here'), 'exception');
         }

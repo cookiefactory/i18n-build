@@ -31,7 +31,7 @@
             $parentToken = $parentToken ?? new KeyDefinition('', $chunk);
 
             if (strstr($parentToken->getOriginalChunk(), $chunk) === false) {
-                throw new ParserException('Input chunk is not part of parent token original chunk');
+                throw new ParserException("Input chunk is not part of parent token original chunk for key `{$parentToken->getKeyName()}`");
             }
 
             try {
