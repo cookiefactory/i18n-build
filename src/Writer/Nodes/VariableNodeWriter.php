@@ -27,7 +27,12 @@
         function compile (Compiler $compiler, Tokenized $token) : string {
             $this->assertTokenType(Variable::class, $token);
 
-            return "{\$context['{$this->escapeStringForSingleQuoteUsage($token->getVariableName())}']}";
+            $bar = [];
+
+            return <<<VARIABLE
+                   " . (\$context['{$this->escapeStringForSingleQuoteUsage($token->getVariableName())}'] ?? '') . "
+                   VARIABLE;
+
         }
 
     }

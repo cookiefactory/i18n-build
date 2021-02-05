@@ -60,11 +60,11 @@
                                   ],
                                   'keys' => [
                                       'bar' => [fn(array $context) => "I am a test key", 'I am a test key'],
-                                      'hello.world' => [fn(array $context) => "Hello {$context['name']}!", 'Hello {name}!'],
-                                      'with.linefeed' => [fn(array $context) => "Hello\n{$context['name']}!", 'Hello'."\n".'{name}!'],
-                                      'with.doubleQuote' => [fn(array $context) => "Hello \"{$context['name']}\"!", 'Hello "{name}"!'],
-                                      'with.singleQuoteInVariable' => [fn(array $context) => "Hello {$context['name\'lol']}!", 'Hello {name\'lol}!'],
-                                      'with.linefeedInVariable' => [fn(array $context) => "Hello {$context['name\'."\n".\'lol']}!", 'Hello {name'."\n".'lol}!'],
+                                      'hello.world' => [fn(array $context) => "Hello " . ($context['name'] ?? '') . "!", 'Hello {name}!'],
+                                      'with.linefeed' => [fn(array $context) => "Hello\n" . ($context['name'] ?? '') . "!", 'Hello'."\n".'{name}!'],
+                                      'with.doubleQuote' => [fn(array $context) => "Hello \"" . ($context['name'] ?? '') . "\"!", 'Hello "{name}"!'],
+                                      'with.singleQuoteInVariable' => [fn(array $context) => "Hello " . ($context['name\'lol'] ?? '') . "!", 'Hello {name\'lol}!'],
+                                      'with.linefeedInVariable' => [fn(array $context) => "Hello " . ($context['name\'."\n".\'lol'] ?? '') . "!", 'Hello {name'."\n".'lol}!'],
                                       'with.variableToken' => [fn(array $context) => "Hello \$name!", 'Hello $name!'],
                                   ]
                               ];
