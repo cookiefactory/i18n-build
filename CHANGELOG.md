@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0-alpha5] - 2020-02-05
+### Fixed
+- Compiled PHP assets now use the null coalescing operator to avoid accessing undefined index if context variable is missing 
+
 ## [1.0.0-alpha4] - 2020-02-02
 ### Fixed
 - Fixed `Input chunk is not part of original chunk` exception when parsing empty key bodies
