@@ -4,6 +4,7 @@
 
     use Tholabs\I18nBuild\Compiler;
     use Tholabs\I18nBuild\Exceptions\InvalidTokenException;
+    use Tholabs\I18nBuild\Exceptions\UnknownTokenException;
     use Tholabs\I18nBuild\Tokens\KeyDefinition;
     use Tholabs\I18nBuild\Tokens\Tokenized;
     use Tholabs\I18nBuild\Writer\NodeWritable;
@@ -22,7 +23,7 @@
          * @param Compiler $compiler
          * @param Tokenized|KeyDefinition $token
          * @return string
-         * @throws InvalidTokenException
+         * @throws InvalidTokenException|UnknownTokenException
          */
         function compile (Compiler $compiler, Tokenized $token) : string {
             $this->assertTokenType(KeyDefinition::class, $token);
