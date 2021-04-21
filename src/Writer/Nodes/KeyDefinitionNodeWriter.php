@@ -6,6 +6,7 @@
     use Tholabs\I18nBuild\Exceptions\InvalidTokenException;
     use Tholabs\I18nBuild\Exceptions\UnknownTokenException;
     use Tholabs\I18nBuild\Tokens\KeyDefinition;
+    use Tholabs\I18nBuild\Tokens\Text;
     use Tholabs\I18nBuild\Tokens\Tokenized;
     use Tholabs\I18nBuild\Writer\NodeWritable;
     use Tholabs\I18nBuild\Writer\SafeEscapingTrait;
@@ -34,7 +35,33 @@
                 $keyBody .= rtrim($this->subCompile(true, $subCompiler, $bodyToken), PHP_EOL);
             }
 
+            if ($this->containsTextOnly($token)) {
+                return $this->renderTextStringOnly($token, $keyBody);
+            }
+
+            return $this->render($token, $keyBody);
+        }
+
+        private function renderTextStringOnly (KeyDefinition $token, string $keyBody) : string {
+            return "'{$token->getKeyName()}' => '{$this->escapeStringForSingleQuoteUsage($token->getOriginalChunk())}',";
+        }
+
+        private function render (KeyDefinition $token, string $keyBody) : string {
             return "'{$token->getKeyName()}' => [fn(array \$context) => \"{$keyBody}\", '{$this->escapeStringForSingleQuoteUsage($token->getOriginalChunk())}'],";
+        }
+
+        private function containsTextOnly (Tokenized $tokenized) : bool {
+            foreach ($tokenized->getChildren() as $child) {
+                if (!$child instanceof Text) {
+                    return false;
+                }
+
+                if ($child instanceof Tokenized && $this->containsTextOnly($child) === false) {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
     }

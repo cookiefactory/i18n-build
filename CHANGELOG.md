@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - `getChildren()`, `find()` and `contains()` have been added to [`Tokenized`](src/Tokens/Tokenized.php) interface
+- [`SeekableTokenTrait`](src/Tokens/SeekableTokenTrait.php) and [`ChildlessTokenTrait`](src/Tokens/ChildlessTokenTrait.php) have been added to implement `find()` and `contains()`
+
+### Changed
+- The standard compiler output version has been raised to `2.0.0`: If all child `Token` instances of a key are just `Text`, then the compile output will no longer be closure but just a string instead 
+
 ## [1.0.0-alpha5] - 2020-02-05
 ### Fixed
 - Compiled PHP assets now use the null coalescing operator to avoid accessing undefined index if context variable is missing 

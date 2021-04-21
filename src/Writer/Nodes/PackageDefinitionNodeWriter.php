@@ -38,13 +38,13 @@
                      * You should not modify it.
                      *
                      * @i18n-package {$token->getPackageName()}
-                     * @i18n-version 1.0.0
+                     * @i18n-version 2.0.0
                      * @createdAt {$creationTimestamp}
                      */
                     
                     return [
                         'meta' => [
-                            'i18n-version' => [1, 0, 0]
+                            'i18n-version' => [2, 0, 0]
                         ],
                         'keys' => [
                             {$this->subCompile(false, $compiler->withIndentIncreased()->withIndentIncreased(), ...$token->getKeys())}
