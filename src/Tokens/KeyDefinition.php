@@ -3,6 +3,7 @@
     namespace Tholabs\I18nBuild\Tokens;
 
     class KeyDefinition implements Tokenized {
+        use SeekableTokenTrait;
 
         private string $keyName;
         private string $originalChunk;
@@ -14,6 +15,10 @@
             $this->keyName = $keyName;
             $this->originalChunk = $originalChunk;
             $this->bodyTokens = $bodyTokens;
+        }
+
+        function getChildren () : iterable {
+            return $this->bodyTokens;
         }
 
         function getKeyName () : string {

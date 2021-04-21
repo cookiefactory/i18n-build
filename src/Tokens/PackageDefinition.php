@@ -3,6 +3,7 @@
     namespace Tholabs\I18nBuild\Tokens;
 
     class PackageDefinition implements Tokenized {
+        use SeekableTokenTrait;
 
         private string $packageName;
 
@@ -12,6 +13,10 @@
         function __construct (string $packageName, KeyDefinition ...$keys) {
             $this->packageName = $packageName;
             $this->keys = $keys;
+        }
+
+        function getChildren () : iterable {
+            return $this->keys;
         }
 
         /**

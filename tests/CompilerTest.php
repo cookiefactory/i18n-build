@@ -12,6 +12,7 @@
     use PHPUnit\Framework\TestCase;
     use Tholabs\I18nBuild\Compiler;
     use Tholabs\I18nBuild\Exceptions\UnknownTokenException;
+    use Tholabs\I18nBuild\Tokens\ChildlessTokenTrait;
     use Tholabs\I18nBuild\Tokens\KeyDefinition;
     use Tholabs\I18nBuild\Tokens\PackageDefinition;
     use Tholabs\I18nBuild\Tokens\Text;
@@ -90,4 +91,4 @@
 
     }
 
-    class FooToken implements Tokenized {}
+    class FooToken implements Tokenized {use ChildlessTokenTrait;}
