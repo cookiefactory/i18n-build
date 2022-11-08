@@ -61,11 +61,11 @@
                                   ],
                                   'keys' => [
                                       'bar' => 'I am a test key',
-                                      'hello.world' => [fn(array $context) => "Hello " . ($context['name'] ?? '') . "!", 'Hello {name}!'],
-                                      'with.linefeed' => [fn(array $context) => "Hello\n" . ($context['name'] ?? '') . "!", 'Hello'."\n".'{name}!'],
-                                      'with.doubleQuote' => [fn(array $context) => "Hello \"" . ($context['name'] ?? '') . "\"!", 'Hello "{name}"!'],
-                                      'with.singleQuoteInVariable' => [fn(array $context) => "Hello " . ($context['name\'lol'] ?? '') . "!", 'Hello {name\'lol}!'],
-                                      'with.linefeedInVariable' => [fn(array $context) => "Hello " . ($context['name\'."\n".\'lol'] ?? '') . "!", 'Hello {name'."\n".'lol}!'],
+                                      'hello.world' => [static fn(array $context) => "Hello " . ($context['name'] ?? '') . "!", 'Hello {name}!'],
+                                      'with.linefeed' => [static fn(array $context) => "Hello\n" . ($context['name'] ?? '') . "!", 'Hello'."\n".'{name}!'],
+                                      'with.doubleQuote' => [static fn(array $context) => "Hello \"" . ($context['name'] ?? '') . "\"!", 'Hello "{name}"!'],
+                                      'with.singleQuoteInVariable' => [static fn(array $context) => "Hello " . ($context['name\'lol'] ?? '') . "!", 'Hello {name\'lol}!'],
+                                      'with.linefeedInVariable' => [static fn(array $context) => "Hello " . ($context['name\'."\n".\'lol'] ?? '') . "!", 'Hello {name'."\n".'lol}!'],
                                       'with.variableToken' => 'Hello $name!',
                                   ]
                               ];
