@@ -47,7 +47,7 @@
         }
 
         private function render (KeyDefinition $token, string $keyBody) : string {
-            return "'{$token->getKeyName()}' => [fn(array \$context) => \"{$keyBody}\", '{$this->escapeStringForSingleQuoteUsage($token->getOriginalChunk())}'],";
+            return "'{$token->getKeyName()}' => [static fn(array \$context) => \"{$keyBody}\", '{$this->escapeStringForSingleQuoteUsage($token->getOriginalChunk())}'],";
         }
 
         private function containsTextOnly (Tokenized $tokenized) : bool {
