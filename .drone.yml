@@ -1,0 +1,20 @@
+name: i18n-build
+kind: pipeline
+
+steps:
+  - name: Prepare
+    image: registry.thobits.com/images/php-composer:8.3
+    commands:
+      - composer install --no-ansi
+
+  - name: Test
+    image: registry.thobits.com/plugins/php-test:8.3
+
+  - name: Release
+    image: registry.thobits.com/images/make:latest
+    commands:
+      - tar cvzf thomann-i18n-build.tar.gz composer.json CHANGELOG.md README.md src/
+      - curl --data-binary @thomann-i18n-build.tar.gz https://repositr.thomann.de/package/composer
+    when:
+      branch: master
+      event: push
