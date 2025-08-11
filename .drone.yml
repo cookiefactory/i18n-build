@@ -16,5 +16,5 @@ steps:
       - tar cvzf thomann-i18n-build.tar.gz composer.json CHANGELOG.md README.md src/
       - curl --data-binary @thomann-i18n-build.tar.gz https://repositr.thomann.de/package/composer
     when:
-      branch: master
+      branch: main
       event: push
