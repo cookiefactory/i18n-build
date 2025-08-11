@@ -1,5 +1,6 @@
 {
-    "name": "tholabs/i18n-build",
+    "name": "thomann/i18n-build",
+    "version": "1.1.2",
     "description": "Framework to build PHP internationalization assets out of arbitrary input formats",
     "type": "library",
     "autoload": {
