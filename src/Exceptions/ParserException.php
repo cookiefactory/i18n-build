@@ -7,7 +7,7 @@
     class ParserException extends \Exception {
         private string $innerMessage;
 
-        function __construct (string $innerMessage, $code = 0, Throwable $previous = null) {
+        function __construct (string $innerMessage, $code = 0, ?Throwable $previous = null) {
             parent::__construct("Parser exception: {$innerMessage}", $code, $previous);
             $this->innerMessage = $innerMessage;
         }
