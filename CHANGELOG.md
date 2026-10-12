@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2026-10-12
+### Changed
+- **BC break**: The standard compiler output version has been raised to `3.0.0`: Compiled packages no longer contain closures
+  and consist of plain arrays only, so OPcache can store them as immutable arrays. Every key is now compiled to its original
+  definition string (e.g. `'hello.world' => 'Hello {name}!'`); variable interpolation is up to the runtime.
+
+### Removed
+- `TextNodeWriter` and `VariableNodeWriter`, as key bodies are no longer compiled
+
 ## [1.1.1] - 2025-08-06
 ### Changed
 - forked from https://github.com/filecage/i18n-build

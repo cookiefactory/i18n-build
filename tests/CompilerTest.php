@@ -51,27 +51,51 @@
                                * You should not modify it.
                                *
                                * @i18n-package foo
-                               * @i18n-version 2.0.0
+                               * @i18n-version 3.0.0
                                * @createdAt 2021-08-22T13:37:42+00:00
                                */
                               
                               return [
                                   'meta' => [
-                                      'i18n-version' => [2, 0, 0]
+                                      'i18n-version' => [3, 0, 0]
                                   ],
                                   'keys' => [
                                       'bar' => 'I am a test key',
-                                      'hello.world' => [static fn(array $context) => "Hello " . ($context['name'] ?? '') . "!", 'Hello {name}!'],
-                                      'with.linefeed' => [static fn(array $context) => "Hello\n" . ($context['name'] ?? '') . "!", 'Hello'."\n".'{name}!'],
-                                      'with.doubleQuote' => [static fn(array $context) => "Hello \"" . ($context['name'] ?? '') . "\"!", 'Hello "{name}"!'],
-                                      'with.singleQuoteInVariable' => [static fn(array $context) => "Hello " . ($context['name\'lol'] ?? '') . "!", 'Hello {name\'lol}!'],
-                                      'with.linefeedInVariable' => [static fn(array $context) => "Hello " . ($context['name\'."\n".\'lol'] ?? '') . "!", 'Hello {name'."\n".'lol}!'],
+                                      'hello.world' => 'Hello {name}!',
+                                      'with.linefeed' => 'Hello'."\n".'{name}!',
+                                      'with.doubleQuote' => 'Hello "{name}"!',
+                                      'with.singleQuoteInVariable' => 'Hello {name\'lol}!',
+                                      'with.linefeedInVariable' => 'Hello {name'."\n".'lol}!',
                                       'with.variableToken' => 'Hello $name!',
                                   ]
                               ];
                               
                               ExpectedRendering
             , stream_get_contents($this->stream, -1, 0));
+        }
+
+        function testCompiledPackageShouldBePlainArray () {
+            $this->compiler->compileToken(new PackageDefinition('foo',
+                new KeyDefinition('bar', 'I am a test key', new Text('I am a test key')),
+                new KeyDefinition('with.linefeed', "Hello\n{name}!", new Text("Hello\n"), new Variable('name'), new Text('!')),
+                new KeyDefinition('with.singleQuoteInVariable', "Hello {name'lol}!", new Text("Hello "), new Variable("name'lol"), new Text('!')),
+            ));
+
+            $file = tempnam(sys_get_temp_dir(), 'i18n');
+            file_put_contents($file, stream_get_contents($this->stream, -1, 0));
+            $package = require $file;
+            unlink($file);
+
+            $this->assertSame([
+                'meta' => [
+                    'i18n-version' => [3, 0, 0]
+                ],
+                'keys' => [
+                    'bar' => 'I am a test key',
+                    'with.linefeed' => "Hello\n{name}!",
+                    'with.singleQuoteInVariable' => "Hello {name'lol}!",
+                ]
+            ], $package);
         }
 
         function testExpectsCompilerToThrowUnknownTokenException () {
